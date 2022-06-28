@@ -1,0 +1,23 @@
+name: naf
+channels:
+  - pytorch
+  - conda-forge
+dependencies:
+  - python
+  - cudatoolkit=11.3
+  - ninja
+  - opencv
+  - tensorboard
+  - argparse
+  - pytorch
+  - numpy 
+  - pandas
+  - tqdm
+  - matplotlib
+  - rich
+  - packaging
+  - scipy
+  - pip:
+    - torch-ema
+    - dearpygui
+    - git+https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/torch
