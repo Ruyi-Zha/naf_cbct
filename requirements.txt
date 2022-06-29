@@ -1,0 +1,14 @@
+ninja
+opencv-python
+tensorboard
+numpy 
+pandas
+tqdm
+matplotlib
+rich
+dearpygui
+packaging
+scipy
+argparse
+PyYAML
+scikit-image

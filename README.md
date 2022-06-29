@@ -4,13 +4,22 @@ Code for NAF: Neural Attenuation Fields for Sparse-View CBCT Reconstruction.
 
 ![NAF framework](framework.png)
 
-### Installation with conda
+### Installation
+
+(Optional) Create an environment.
 
 ```
 git clone git@github.com:Ruyi-Zha/naf_cbct.git
-cd naf_cbct
-conda env create -f environment.yml
+conda create -n naf python=3.9
 conda activate naf
+```
+
+Follow the [instruction](https://pytorch.org/get-started/locally/) to install pytorch.
+
+Install other packages.
+
+```
+pip install -r requirements.txt
 ```
 
 ### Training
