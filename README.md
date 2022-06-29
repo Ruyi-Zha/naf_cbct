@@ -2,7 +2,7 @@
 
 Code for NAF: Neural Attenuation Fields for Sparse-View CBCT Reconstruction.
 
-![]()
+![](framework.pdf)
 
 ### Installation with conda
 
@@ -81,5 +81,5 @@ The framework of NAF is adapted from [nerf-pytorch](https://github.com/yenchenli
 }
 ```
 
-Credits to the amazing [TIGRE toolbox](https://github.com/CERN/TIGRE.git).
+Many thanks to the amazing [TIGRE toolbox](https://github.com/CERN/TIGRE.git).
 

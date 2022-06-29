@@ -6,9 +6,9 @@ dependencies:
   - python
   - cudatoolkit=11.3
   - ninja
+  - trimesh
   - opencv
-  - tensorboard
-  - argparse
+  - tensorboardX
   - pytorch
   - numpy 
   - pandas
@@ -19,5 +19,7 @@ dependencies:
   - scipy
   - pip:
     - torch-ema
+    - PyMCubes
+    - pysdf
     - dearpygui
     - git+https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/torch
