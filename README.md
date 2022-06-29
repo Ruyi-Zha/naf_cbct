@@ -2,7 +2,7 @@
 
 Code for NAF: Neural Attenuation Fields for Sparse-View CBCT Reconstruction.
 
-![](framework.pdf)
+![NAF framework](framework.png)
 
 ### Installation with conda
 
