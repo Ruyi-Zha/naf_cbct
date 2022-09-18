@@ -1,4 +1,4 @@
-# naf_cbct
+# NAF: Neural Attenuation Fields for Sparse-View CBCT Reconstruction
 
 Code for NAF: Neural Attenuation Fields for Sparse-View CBCT Reconstruction.
 
