@@ -4,6 +4,17 @@ Code for NAF: Neural Attenuation Fields for Sparse-View CBCT Reconstruction.
 
 ![NAF framework](framework.png)
 
+```
+@inproceedings{zha2022naf,
+  title={NAF: Neural Attenuation Fields for Sparse-View CBCT Reconstruction},
+  author={Zha, Ruyi and Zhang, Yanhao and Li, Hongdong},
+  booktitle={International Conference on Medical Image Computing and Computer-Assisted Intervention},
+  pages={442--452},
+  year={2022},
+  organization={Springer}
+}
+```
+
 ### Installation
 
 (Optional) Create an environment.
