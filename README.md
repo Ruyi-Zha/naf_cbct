@@ -1,10 +1,10 @@
 # NAF: Neural Attenuation Fields for Sparse-View CBCT Reconstruction
 
-Code for NAF: Neural Attenuation Fields for Sparse-View CBCT Reconstruction.
+Code for [NAF: Neural Attenuation Fields for Sparse-View CBCT Reconstruction](https://arxiv.org/abs/2209.14540).
 
 ![NAF framework](framework.png)
 
-```
+```sh
 @inproceedings{zha2022naf,
   title={NAF: Neural Attenuation Fields for Sparse-View CBCT Reconstruction},
   author={Zha, Ruyi and Zhang, Yanhao and Li, Hongdong},
@@ -17,19 +17,15 @@ Code for NAF: Neural Attenuation Fields for Sparse-View CBCT Reconstruction.
 
 ### Installation
 
-(Optional) Create an environment.
-
-```
-git clone git@github.com:Ruyi-Zha/naf_cbct.git
+``` sh
+# Create envorinment
 conda create -n naf python=3.9
 conda activate naf
-```
 
-Follow the [instruction](https://pytorch.org/get-started/locally/) to install pytorch.
+# Install pytorch
+pip install torch==1.11.0+cu113 torchvision==0.12.0+cu113 torchaudio==0.11.0 --extra-index-url https://download.pytorch.org/whl/cu113
 
-Install other packages.
-
-```
+# Install other packages
 pip install -r requirements.txt
 ```
 
@@ -41,19 +37,17 @@ Experiments settings are stored in `./config` folder.
 
 For example, train NAF with `chest_50` dataset:
 
-```
+``` sh
 python train.py --config ./config/chest_50.yaml
 ```
 
-
-
 ### Make your own simulation dataset
 
-You can make your own simulation dataset with TIGRE toolbox. Please first install [TIGRE](https://github.com/CERN/TIGRE). 
+You can make your own simulation dataset with TIGRE toolbox. Please first install [TIGRE](https://github.com/CERN/TIGRE).
 
 Put your CT data in the format as follows. Examples can be seen in [here](https://drive.google.com/drive/folders/1BJYR4a4iHpfFFOAdbEe5O_7Itt1nukJd?usp=sharing).
 
-```
+```sh
 ├── raw                                                                                                       
 │   ├── XXX (your CT name)
 │   │   └── img.mat (CT data)
@@ -65,8 +59,6 @@ Then use TIGRE to generate simulated X-ray projections.
 ```
 python dataGenerator/generateData.py --ctName XXX --outputName XXX_50
 ```
-
-
 
 # Acknowledgement
 
@@ -102,4 +94,3 @@ The framework of NAF is adapted from [nerf-pytorch](https://github.com/yenchenli
 ```
 
 Many thanks to the amazing [TIGRE toolbox](https://github.com/CERN/TIGRE.git).
-
