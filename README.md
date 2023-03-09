@@ -62,7 +62,7 @@ python dataGenerator/generateData.py --ctName XXX --outputName XXX_50
 
 # Acknowledgement
 
-Hash encoder and code structure is adapted from [torch-ngp](https://github.com/ashawkey/torch-ngp.git).
+Hash encoder and code structure are adapted from [torch-ngp](https://github.com/ashawkey/torch-ngp.git).
 
 ```
 @misc{torch-ngp,
