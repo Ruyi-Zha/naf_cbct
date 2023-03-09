@@ -62,7 +62,7 @@ python dataGenerator/generateData.py --ctName XXX --outputName XXX_50
 
 # Acknowledgement
 
-Hash encoder is adapted from [torch-ngp](https://github.com/ashawkey/torch-ngp.git).
+Hash encoder and code structure is adapted from [torch-ngp](https://github.com/ashawkey/torch-ngp.git).
 
 ```
 @misc{torch-ngp,
@@ -77,19 +77,6 @@ Hash encoder is adapted from [torch-ngp](https://github.com/ashawkey/torch-ngp.g
     author = {Tang, Jiaxiang and Chen, Xiaokang and Wang, Jingbo and Zeng, Gang},
     journal = {arXiv preprint arXiv:2205.14870},
     year = {2022}
-}
-```
-
-The framework of NAF is adapted from [nerf-pytorch](https://github.com/yenchenlin/nerf-pytorch.git).
-
-```
-@misc{lin2020nerfpytorch,
-  title={NeRF-pytorch},
-  author={Yen-Chen, Lin},
-  publisher = {GitHub},
-  journal = {GitHub repository},
-  howpublished={\url{https://github.com/yenchenlin/nerf-pytorch/}},
-  year={2020}
 }
 ```
 
