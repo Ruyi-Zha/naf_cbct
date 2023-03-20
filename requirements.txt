@@ -11,4 +11,4 @@ packaging
 scipy
 argparse
 PyYAML
-scikit-image
+scikit-image==0.19
