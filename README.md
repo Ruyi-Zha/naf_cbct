@@ -1,24 +1,19 @@
 # NAF: Neural Attenuation Fields for Sparse-View CBCT Reconstruction
 
-Code for [NAF: Neural Attenuation Fields for Sparse-View CBCT Reconstruction](https://arxiv.org/abs/2209.14540).
+Code for MICCAI 2022 Oral paper [NAF: Neural Attenuation Fields for Sparse-View CBCT Reconstruction](https://arxiv.org/abs/2209.14540) by [Ruyi Zha](https://ruyi-zha.github.io/), [Yanhao Zhang](https://sites.google.com/view/yanhaozhang/home) and [Hongdong Li](https://sites.google.com/view/yanhaozhang/home).
+
+A neural-field-based method for CBCT reconstruction.
+
+[\[paper\]](https://arxiv.org/abs/2209.14540)[\[dataset\]](https://drive.google.com/drive/folders/1BJYR4a4iHpfFFOAdbEe5O_7Itt1nukJd?usp=sharing)
 
 ![NAF framework](framework.png)
 
-```sh
-@inproceedings{zha2022naf,
-  title={NAF: Neural Attenuation Fields for Sparse-View CBCT Reconstruction},
-  author={Zha, Ruyi and Zhang, Yanhao and Li, Hongdong},
-  booktitle={International Conference on Medical Image Computing and Computer-Assisted Intervention},
-  pages={442--452},
-  year={2022},
-  organization={Springer}
-}
-```
+## Setup
 
-### Installation
+We recommend using [Conda](https://docs.conda.io/en/latest/miniconda.html) to set up an environment.
 
 ``` sh
-# Create envorinment
+# Create environment
 conda create -n naf python=3.9
 conda activate naf
 
@@ -29,7 +24,7 @@ pip install torch==1.11.0+cu113 torchvision==0.12.0+cu113 torchaudio==0.11.0 --e
 pip install -r requirements.txt
 ```
 
-### Training
+## Training and evaluation
 
 Download four CT datasets from [here](https://drive.google.com/drive/folders/1BJYR4a4iHpfFFOAdbEe5O_7Itt1nukJd?usp=sharing). Put them into the `./data` folder.
 
@@ -41,7 +36,11 @@ For example, train NAF with `chest_50` dataset:
 python train.py --config ./config/chest_50.yaml
 ```
 
-### Make your own simulation dataset
+*Note: It may take minutes to compile the hash encoder module for the first time.*
+
+The evaluation outputs will be saved in `./logs/eval/iter_*` folder.
+
+## Customized dataset
 
 You can make your own simulation dataset with TIGRE toolbox. Please first install [TIGRE](https://github.com/CERN/TIGRE).
 
@@ -56,28 +55,26 @@ Put your CT data in the format as follows. Examples can be seen in [here](https:
 
 Then use TIGRE to generate simulated X-ray projections.
 
-```
+``` sh
 python dataGenerator/generateData.py --ctName XXX --outputName XXX_50
 ```
 
-# Acknowledgement
+## Citation
 
-Hash encoder and code structure are adapted from [torch-ngp](https://github.com/ashawkey/torch-ngp.git).
+Cite as below if you find this repository is helpful to your project.
 
-```
-@misc{torch-ngp,
-    Author = {Jiaxiang Tang},
-    Year = {2022},
-    Note = {https://github.com/ashawkey/torch-ngp},
-    Title = {Torch-ngp: a PyTorch implementation of instant-ngp}
-}
-
-@article{tang2022compressible,
-    title = {Compressible-composable NeRF via Rank-residual Decomposition},
-    author = {Tang, Jiaxiang and Chen, Xiaokang and Wang, Jingbo and Zeng, Gang},
-    journal = {arXiv preprint arXiv:2205.14870},
-    year = {2022}
+```sh
+@inproceedings{zha2022naf,
+  title={NAF: Neural Attenuation Fields for Sparse-View CBCT Reconstruction},
+  author={Zha, Ruyi and Zhang, Yanhao and Li, Hongdong},
+  booktitle={International Conference on Medical Image Computing and Computer-Assisted Intervention},
+  pages={442--452},
+  year={2022},
+  organization={Springer}
 }
 ```
 
-Many thanks to the amazing [TIGRE toolbox](https://github.com/CERN/TIGRE.git).
+## Acknowledgement
+
+* Hash encoder and code structure are adapted from [torch-ngp](https://github.com/ashawkey/torch-ngp.git).
+* Many thanks to the amazing [TIGRE toolbox](https://github.com/CERN/TIGRE.git).

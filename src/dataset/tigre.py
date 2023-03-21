@@ -11,42 +11,40 @@ class ConeGeometry(object):
     """
     Cone beam CT geometry. Note that we convert to meter from millimeter.
     """
-
     def __init__(self, data):
 
         # VARIABLE                                          DESCRIPTION                    UNITS
         # -------------------------------------------------------------------------------------
-        self.DSD = data['DSD']/1000 # Distance Source Detector      (m)
-        self.DSO = data['DSO']/1000  # Distance Source Origin        (m)
+        self.DSD = data["DSD"]/1000 # Distance Source Detector      (m)
+        self.DSO = data["DSO"]/1000  # Distance Source Origin        (m)
         # Detector parameters
-        self.nDetector = np.array(data['nDetector'])  # number of pixels              (px)
-        self.dDetector = np.array(data['dDetector'])/1000  # size of each pixel            (m)
+        self.nDetector = np.array(data["nDetector"])  # number of pixels              (px)
+        self.dDetector = np.array(data["dDetector"])/1000  # size of each pixel            (m)
         self.sDetector = self.nDetector * self.dDetector  # total size of the detector    (m)
         # Image parameters
-        self.nVoxel = np.array(data['nVoxel'])  # number of voxels              (vx)
-        self.dVoxel = np.array(data['dVoxel'])/1000  # size of each voxel            (m)
+        self.nVoxel = np.array(data["nVoxel"])  # number of voxels              (vx)
+        self.dVoxel = np.array(data["dVoxel"])/1000  # size of each voxel            (m)
         self.sVoxel = self.nVoxel * self.dVoxel  # total size of the image       (m)
 
         # Offsets
-        self.offOrigin = np.array(data['offOrigin'])/1000  # Offset of image from origin   (m)
-        self.offDetector = np.array(data['offDetector'])/1000  # Offset of Detector            (m)
+        self.offOrigin = np.array(data["offOrigin"])/1000  # Offset of image from origin   (m)
+        self.offDetector = np.array(data["offDetector"])/1000  # Offset of Detector            (m)
 
         # Auxiliary
-        self.accuracy = data['accuracy']  # Accuracy of FWD proj          (vx/sample)  # noqa: E501
+        self.accuracy = data["accuracy"]  # Accuracy of FWD proj          (vx/sample)  # noqa: E501
         # Mode
-        self.mode = data['mode']  # parallel, cone                ...
-        self.filter = data['filter']
-
+        self.mode = data["mode"]  # parallel, cone                ...
+        self.filter = data["filter"]
 
 
 class TIGREDataset(Dataset):
     """
     TIGRE dataset.
     """
-    def __init__(self, path, n_rays=1024, type='train', device='cuda'):    
+    def __init__(self, path, n_rays=1024, type="train", device="cuda"):    
         super().__init__()
 
-        with open(path, 'rb') as handle:
+        with open(path, "rb") as handle:
             data = pickle.load(handle)
         
         self.geo = ConeGeometry(data)
@@ -54,34 +52,32 @@ class TIGREDataset(Dataset):
         self.n_rays = n_rays
         self.near, self.far = self.get_near_far(self.geo)
     
-        if type == 'train':
-            self.projs = torch.tensor(data['train']['projections'], dtype=torch.float32, device=device)
-            angles = data['train']['angles']
+        if type == "train":
+            self.projs = torch.tensor(data["train"]["projections"], dtype=torch.float32, device=device)
+            angles = data["train"]["angles"]
             rays = self.get_rays(angles, self.geo, device)
             self.rays = torch.cat([rays, torch.ones_like(rays[...,:1])*self.near, torch.ones_like(rays[...,:1])*self.far], dim=-1)
-            self.n_samples = data['numTrain']
+            self.n_samples = data["numTrain"]
             coords = torch.stack(torch.meshgrid(torch.linspace(0, self.geo.nDetector[1] - 1, self.geo.nDetector[1]),
-                                                torch.linspace(0, self.geo.nDetector[0] - 1, self.geo.nDetector[0])),
+                                                torch.linspace(0, self.geo.nDetector[0] - 1, self.geo.nDetector[0]), indexing="ij"),
                                  -1)
             self.coords = torch.reshape(coords, [-1, 2])
-            self.image = torch.tensor(data['image'], dtype=torch.float32, device=device)
+            self.image = torch.tensor(data["image"], dtype=torch.float32, device=device)
             self.voxels = torch.tensor(self.get_voxels(self.geo), dtype=torch.float32, device=device)
-        elif type == 'val':
-            self.projs = torch.tensor(data['val']['projections'], dtype=torch.float32, device=device)
-            angles = data['val']['angles']
+        elif type == "val":
+            self.projs = torch.tensor(data["val"]["projections"], dtype=torch.float32, device=device)
+            angles = data["val"]["angles"]
             rays = self.get_rays(angles, self.geo, device)
             self.rays = torch.cat([rays, torch.ones_like(rays[...,:1])*self.near, torch.ones_like(rays[...,:1])*self.far], dim=-1)
-            self.n_samples = data['numVal']
-            self.image = torch.tensor(data['image'], dtype=torch.float32, device=device)
+            self.n_samples = data["numVal"]
+            self.image = torch.tensor(data["image"], dtype=torch.float32, device=device)
             self.voxels = torch.tensor(self.get_voxels(self.geo), dtype=torch.float32, device=device)
         
-
-    
     def __len__(self):
         return self.n_samples
 
     def __getitem__(self, index):
-        if self.type == 'train':
+        if self.type == "train":
             projs_valid = (self.projs[index]>0).flatten()
             coords_valid = self.coords[projs_valid]
             select_inds = np.random.choice(coords_valid.shape[0], size=[self.n_rays], replace=False)
@@ -89,19 +85,17 @@ class TIGREDataset(Dataset):
             rays = self.rays[index, select_coords[:, 0], select_coords[:, 1]]
             projs = self.projs[index, select_coords[:, 0], select_coords[:, 1]]
             out = {
-                'projs':projs,
-                'rays':rays,
+                "projs":projs,
+                "rays":rays,
             }
-        elif self.type == 'val':
+        elif self.type == "val":
             rays = self.rays[index]
             projs = self.projs[index]
             out = {
-                'projs':projs,
-                'rays':rays,
+                "projs":projs,
+                "rays":rays,
             }
         return out
-
-
 
     def get_voxels(self, geo: ConeGeometry):
         """
@@ -112,7 +106,7 @@ class TIGREDataset(Dataset):
 
         xyz = np.meshgrid(np.linspace(-s1, s1, n1),
                         np.linspace(-s2, s2, n2),
-                        np.linspace(-s3, s3, n3), indexing='ij')
+                        np.linspace(-s3, s3, n3), indexing="ij")
         voxel = np.asarray(xyz).transpose([1, 2, 3, 0])
         return voxel
     
@@ -128,17 +122,17 @@ class TIGREDataset(Dataset):
         for angle in angles:
             pose = torch.Tensor(self.angle2pose(geo.DSO, angle)).to(device)
             rays_o, rays_d = None, None
-            if geo.mode == 'cone':
+            if geo.mode == "cone":
                 i, j = torch.meshgrid(torch.linspace(0, W - 1, W, device=device),
-                                    torch.linspace(0, H - 1, H, device=device))  # pytorch's meshgrid has indexing='ij'
+                                    torch.linspace(0, H - 1, H, device=device), indexing="ij")  # pytorch"s meshgrid has indexing="ij"
                 uu = (i.t() + 0.5 - W / 2) * geo.dDetector[0] + geo.offDetector[0]
                 vv = (j.t() + 0.5 - H / 2) * geo.dDetector[1] + geo.offDetector[1]
                 dirs = torch.stack([uu / DSD, vv / DSD, torch.ones_like(uu)], -1)
                 rays_d = torch.sum(torch.matmul(pose[:3,:3], dirs[..., None]).to(device), -1) # pose[:3, :3] * 
                 rays_o = pose[:3, -1].expand(rays_d.shape)
-            elif geo.mode == 'parallel':
+            elif geo.mode == "parallel":
                 i, j = torch.meshgrid(torch.linspace(0, W - 1, W, device=device),
-                                        torch.linspace(0, H - 1, H, device=device))  # pytorch's meshgrid has indexing='ij'
+                                        torch.linspace(0, H - 1, H, device=device), indexing="ij")  # pytorch"s meshgrid has indexing="ij"
                 uu = (i.t() + 0.5 - W / 2) * geo.dDetector[0] + geo.offDetector[0]
                 vv = (j.t() + 0.5 - H / 2) * geo.dDetector[1] + geo.offDetector[1]
                 dirs = torch.stack([torch.zeros_like(uu), torch.zeros_like(uu), torch.ones_like(uu)], -1)
@@ -154,13 +148,10 @@ class TIGREDataset(Dataset):
                 # o3d.visualization.draw_geometries([cube1, cube2, rays1, poseray])
             
             else:
-                NotImplementedError('Unknown CT scanner type!')
+                raise NotImplementedError("Unknown CT scanner type!")
             rays.append(torch.concat([rays_o, rays_d], dim=-1))
-        
-
 
         return torch.stack(rays, dim=0)
-    
 
     def angle2pose(self, DSO, angle):
         phi1 = -np.pi / 2
@@ -181,7 +172,6 @@ class TIGREDataset(Dataset):
         T[:-1, -1] = trans
         return T
 
-    
     def get_near_far(self, geo: ConeGeometry, tolerance=0.005):
         """
         Compute the near and far threshold.

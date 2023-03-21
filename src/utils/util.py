@@ -26,14 +26,14 @@ def get_psnr(x, y):
 
 
 def get_psnr_3d(arr1, arr2, size_average=True, PIXEL_MAX=1.0):
-    '''
+    """
     :param arr1:
         Format-[NDHW], OriImage [0,1]
     :param arr2:
         Format-[NDHW], ComparedImage [0,1]
     :return:
         Format-None if size_average else [N]
-    '''
+    """
     if torch.is_tensor(arr1):
         arr1 = arr1.cpu().detach().numpy()
     if torch.is_tensor(arr2):
@@ -58,14 +58,14 @@ def get_psnr_3d(arr1, arr2, size_average=True, PIXEL_MAX=1.0):
 
 
 def get_ssim_3d(arr1, arr2, size_average=True, PIXEL_MAX=1.0):
-    '''
+    """
     :param arr1:
         Format-[NDHW], OriImage [0,1]
     :param arr2:
         Format-[NDHW], ComparedImage [0,1]
     :return:
         Format-None if size_average else [N]
-    '''
+    """
     if torch.is_tensor(arr1):
         arr1 = arr1.cpu().detach().numpy()
     if torch.is_tensor(arr2):

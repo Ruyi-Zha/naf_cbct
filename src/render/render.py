@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 
+
 def render(rays, net, net_fine, n_samples, n_fine, perturb, netchunk, raw_noise_std):
     n_rays = rays.shape[0]
     rays_o, rays_d, near, far = rays[...,:3], rays[...,3:6], rays[...,6:7], rays[...,7:]
@@ -41,11 +42,11 @@ def render(rays, net, net_fine, n_samples, n_fine, perturb, netchunk, raw_noise_
         raw = run_network(pts, net_fine, netchunk)
         acc, _ = raw2outputs(raw, z_vals, rays_d, raw_noise_std)
 
-    ret = {'acc': acc, 'pts':pts}
+    ret = {"acc": acc, "pts":pts}
     if net_fine is not None and n_fine > 0:
-        ret['acc0'] = acc_0
-        ret['weights0'] = weights_0
-        ret['pts0'] = pts_0
+        ret["acc0"] = acc_0
+        ret["weights0"] = weights_0
+        ret["pts0"] = pts_0
     
     for k in ret:
         if torch.isnan(ret[k]).any() or torch.isinf(ret[k]).any():
@@ -54,18 +55,18 @@ def render(rays, net, net_fine, n_samples, n_fine, perturb, netchunk, raw_noise_
     return ret
 
 
-
 def run_network(inputs, fn, netchunk):
     """
-    Prepares inputs and applies network 'fn'.
+    Prepares inputs and applies network "fn".
     """
     uvt_flat = torch.reshape(inputs, [-1, inputs.shape[-1]])
     out_flat = torch.cat([fn(uvt_flat[i:i + netchunk]) for i in range(0, uvt_flat.shape[0], netchunk)], 0)
     out = out_flat.reshape(list(inputs.shape[:-1]) + [out_flat.shape[-1]])
     return out 
 
+
 def raw2outputs(raw, z_vals, rays_d, raw_noise_std=0.):
-    """Transforms model's predictions to semantically meaningful values.
+    """Transforms model"s predictions to semantically meaningful values.
     Args:
         raw: [num_rays, num_samples along ray, 4]. Prediction from model.
         z_vals: [num_rays, num_samples along ray]. Integration time.
@@ -99,6 +100,7 @@ def raw2outputs(raw, z_vals, rays_d, raw_noise_std=0.):
         raise NotImplementedError("Wrong raw shape")
 
     return acc, weights
+
 
 def sample_pdf(bins, weights, N_samples, det=False):
     # Get pdf

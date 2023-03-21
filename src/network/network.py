@@ -3,7 +3,7 @@ import torch.nn as nn
 
 
 class DensityNetwork(nn.Module):
-    def __init__(self, encoder, bound=0.2, num_layers=8, hidden_dim=256, skips=[4], out_dim=1, last_activation='sigmoid'):
+    def __init__(self, encoder, bound=0.2, num_layers=8, hidden_dim=256, skips=[4], out_dim=1, last_activation="sigmoid"):
         super().__init__()
         self.nunm_layers = num_layers
         self.hidden_dim = hidden_dim
@@ -20,13 +20,12 @@ class DensityNetwork(nn.Module):
 
         # Activations
         self.activations = nn.ModuleList([nn.LeakyReLU() for i in range(0, num_layers-1, 1)])
-        if last_activation == 'sigmoid':
+        if last_activation == "sigmoid":
             self.activations.append(nn.Sigmoid())
-        elif last_activation == 'relu':
+        elif last_activation == "relu":
             self.activations.append(nn.LeakyReLU())
         else:
-            NotImplementedError('Unknown last activation')
-
+            raise NotImplementedError("Unknown last activation")
 
     def forward(self, x):
         

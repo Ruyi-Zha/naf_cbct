@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 
+
 class FreqEncoder(nn.Module):
     def __init__(self, input_dim, max_freq_log2, N_freqs,
                  log_sampling=True, include_input=True,

@@ -1,8 +1,9 @@
 from .network import DensityNetwork
 
+
 def get_network(type):
-    if type == 'mlp':
+    if type == "mlp":
         return DensityNetwork
     else:
-        NotImplementedError('Unknown network typeß!')
+        raise NotImplementedError("Unknown network typeß!")
 
