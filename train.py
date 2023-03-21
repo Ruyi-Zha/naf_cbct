@@ -49,7 +49,7 @@ class BasicTrainer(Trainer):
 
         return loss["loss"]
 
-    def eval_step(self, global_step):
+    def eval_step(self, global_step, idx_epoch):
         """
         Evaluation step
         """
@@ -92,7 +92,7 @@ class BasicTrainer(Trainer):
             self.writer.add_scalar(f"eval/{ls}", loss[ls], global_step)
             
         # Save
-        eval_save_dir = osp.join(self.evaldir, f"iter_{global_step}")
+        eval_save_dir = osp.join(self.evaldir, f"epoch_{idx_epoch:05d}")
         os.makedirs(eval_save_dir, exist_ok=True)
         np.save(osp.join(eval_save_dir, "image_pred.npy"), image_pred.cpu().detach().numpy())
         np.save(osp.join(eval_save_dir, "image_gt.npy"), image.cpu().detach().numpy())

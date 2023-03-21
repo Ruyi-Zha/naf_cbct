@@ -72,7 +72,6 @@ class Trainer:
         self.writer = SummaryWriter(self.expdir)
         self.writer.add_text("parameters", self.args2string(cfg), global_step=0)
 
-
     def args2string(self, hp):
         """
         Transfer args to string.
@@ -91,13 +90,13 @@ class Trainer:
         if self.epoch_start > 0:
             pbar.update(self.epoch_start*iter_per_epoch)
 
-        for idx_epoch in range(self.epoch_start, self.epochs):
+        for idx_epoch in range(self.epoch_start, self.epochs+1):
 
             # Evaluate
-            if idx_epoch % self.i_eval == 0 and self.i_eval > 0:
+            if (idx_epoch % self.i_eval == 0 or idx_epoch == self.epochs) and self.i_eval > 0:
                 self.net.eval()
                 with torch.no_grad():
-                    loss_test = self.eval_step(global_step=self.global_step)
+                    loss_test = self.eval_step(global_step=self.global_step, idx_epoch=idx_epoch)
                 self.net.train()
                 tqdm.write(f"[EVAL] epoch: {idx_epoch}/{self.epochs}{fmt_loss_str(loss_test)}")
             
@@ -111,7 +110,7 @@ class Trainer:
                 pbar.update(1)
             
             # Save
-            if (idx_epoch+1) % self.i_save == 0 or idx_epoch == self.epochs-1:
+            if (idx_epoch % self.i_save == 0 or idx_epoch == self.epochs) and self.i_save > 0 and idx_epoch > 0:
                 if osp.exists(self.ckptdir):
                     copyfile(self.ckptdir, self.ckptdir_backup)
                 tqdm.write(f"[SAVE] epoch: {idx_epoch}/{self.epochs}, path: {self.ckptdir}")
@@ -129,7 +128,7 @@ class Trainer:
             self.writer.add_scalar("train/lr", self.optimizer.param_groups[0]["lr"], self.global_step)
             self.lr_scheduler.step()
 
-        print(f"Training complete! {self.expdir}")
+        tqdm.write(f"Training complete! See logs in {self.expdir}")
 
     def train_step(self, data, global_step, idx_epoch):
         """
@@ -148,7 +147,7 @@ class Trainer:
         raise NotImplementedError()
 
 
-    def eval_step(self, global_step):
+    def eval_step(self, global_step, idx_epoch):
         """
         Evaluation step
         """
