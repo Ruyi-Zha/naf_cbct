@@ -1,6 +1,6 @@
 # NAF: Neural Attenuation Fields for Sparse-View CBCT Reconstruction
 
-Code for MICCAI 2022 Oral paper [NAF: Neural Attenuation Fields for Sparse-View CBCT Reconstruction](https://arxiv.org/abs/2209.14540) by [Ruyi Zha](https://ruyi-zha.github.io/), [Yanhao Zhang](https://sites.google.com/view/yanhaozhang/home) and [Hongdong Li](https://sites.google.com/view/yanhaozhang/home).
+Code for MICCAI 2022 Oral paper [NAF: Neural Attenuation Fields for Sparse-View CBCT Reconstruction](https://arxiv.org/abs/2209.14540) by [Ruyi Zha](https://ruyi-zha.github.io/), [Yanhao Zhang](https://sites.google.com/view/yanhaozhang/home) and [Hongdong Li](http://users.cecs.anu.edu.au/~hongdong/).
 
 A neural-field-based method for CBCT reconstruction.
 
