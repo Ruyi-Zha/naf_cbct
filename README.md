@@ -38,7 +38,7 @@ python train.py --config ./config/chest_50.yaml
 
 *Note: It may take minutes to compile the hash encoder module for the first time.*
 
-The evaluation outputs will be saved in `./logs/eval/iter_*` folder.
+The evaluation outputs will be saved in `./logs/eval/epoch_*` folder.
 
 ## Customized dataset
 
