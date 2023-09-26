@@ -58,6 +58,11 @@ Then use TIGRE to generate simulated X-ray projections.
 ``` sh
 python dataGenerator/generateData.py --ctName XXX --outputName XXX_50
 ```
+## Coordinate system
+Our coordinate system is similar to that in TIGRE toolbox, except for the detector plane which follows OpenCV standards.
+
+![NAF coordinate systen](coord.png)
+
 
 ## Citation
 
