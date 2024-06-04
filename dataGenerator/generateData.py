@@ -176,9 +176,10 @@ def generator(matPath, configPath, outputPath, show=False):
     else:
         data["train"] = {"angles": np.sort(np.random.rand(data["numTrain"]) * data["totalAngle"] / 180 * np.pi) + data["startAngle"]/ 180 * np.pi}
     projections = tigre.Ax(np.transpose(img, (2, 1, 0)).copy(), geo, data["train"]["angles"])[:, ::-1, :]
-    if data["noise"] != 0 and data["normalize"]:
+    if data["noise"] and data["normalize"]:
         print("Add noise to projections")
-        noise_projections = CTnoise.add(projections, Poisson=1e5, Gaussian=np.array([0, data["noise"]]))
+        noise_projections = CTnoise.add(projections, Poisson=1e5, Gaussian=np.array([0, 10]))
+        noise_projections[noise_projections < 0.0] = 0.0
         data["train"]["projections"] = noise_projections
     else:
         data["train"]["projections"] = projections

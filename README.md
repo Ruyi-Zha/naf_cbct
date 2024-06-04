@@ -6,7 +6,7 @@ A neural-field-based method for CBCT reconstruction.
 
 [\[paper\]](https://arxiv.org/abs/2209.14540)[\[dataset\]](https://drive.google.com/drive/folders/1BJYR4a4iHpfFFOAdbEe5O_7Itt1nukJd?usp=sharing)
 
-![NAF framework](framework.png)
+![NAF framework](assets/framework.png)
 
 ## Setup
 
@@ -14,7 +14,7 @@ We recommend using [Conda](https://docs.conda.io/en/latest/miniconda.html) to se
 
 ``` sh
 # Create environment
-conda create -n naf python=3.9
+conda create -n naf python=3.9 -y
 conda activate naf
 
 # Install pytorch (hash encoder requires CUDA v11.3)
@@ -44,6 +44,15 @@ The evaluation outputs will be saved in `./logs/eval/epoch_*` folder.
 
 You can make your own simulation dataset with TIGRE toolbox. Please first install [TIGRE](https://github.com/CERN/TIGRE/blob/master/Frontispiece/python_installation.md).
 
+```sh
+# Install TIGRE
+wget https://github.com/CERN/TIGRE/archive/refs/tags/v2.3.zip
+unzip v2.3.zip
+cd TIGRE-2.3/Python
+pip install . --no-build-isolation
+cd ../../
+```
+
 Put your CT data in the format as follows. Examples can be seen in [here](https://drive.google.com/drive/folders/1BJYR4a4iHpfFFOAdbEe5O_7Itt1nukJd?usp=sharing).
 
 ```sh
@@ -61,7 +70,7 @@ python dataGenerator/generateData.py --ctName XXX --outputName XXX_50
 ## Coordinate system
 Our coordinate system is similar to that in TIGRE toolbox, except for the detector plane which follows OpenCV standards.
 
-![NAF coordinate systen](coord.png)
+![NAF coordinate systen](assets/coord.png)
 
 
 ## Citation

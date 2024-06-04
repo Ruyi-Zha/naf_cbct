@@ -24,7 +24,7 @@ render:
   raw_noise_std: 0.
   netchunk: 409600
 train:
-  epoch: 1500
+  epoch: 3000
   n_batch: 1
   n_rays: 1024
   lrate: 0.001
