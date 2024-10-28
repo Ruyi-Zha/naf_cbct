@@ -4,3 +4,4 @@ logs/
 *.zip
 TIGRE*/
 dataGenerator/raw/
+.vscode/
